@@ -42,9 +42,11 @@
    <div class="col-md-12">
       <div class="well">
          <form class="" action="#" method="post">
-            <div class="form-group">
-               <label for="exampleInputPassword3">Dealer Name</label>
-               <select class="form-control" name="dealer_name" id="">
+          <div class="row">
+            <div class="col-md-6">
+               <div class="form-group">
+               <label for="">Dealer Name</label>
+               <select class="form-control"  name="dealer_name" id="">
                   <option value="">select an option</option>
                   <?php
                      $query1 = $con->joinQuery("SELECT * FROM `dealers`");
@@ -54,6 +56,9 @@
                   <?php  } ?>
                </select>
             </div>
+            </div>
+          </div>
+           
             <button type="button" class="btn btn-primary" onclick="addnew()">addnew</button>
             <div id="holder">
                <div class="row" id="rowholder">
