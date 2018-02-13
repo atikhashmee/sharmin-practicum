@@ -1,0 +1,38 @@
+
+
+ <?php
+ /**
+ * 
+ */
+ class Db 
+ {
+ 	  
+ 	  private $conn="";
+ 	function __construct()
+ 	{
+ 		try {
+       $conn = new PDO("mysql:host=localhost;dbname=dealers", "root", "");
+       // set the PDO error mode to exception
+      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+       }
+        catch(PDOException $e)
+      {
+      echo "Connection failed: " . $e->getMessage();
+      }
+    }
+
+    function getConnection()
+    {
+    	if(!$this->conn)
+    	{
+    		 $conn = new PDO("mysql:host=localhost;dbname=dealers", "root", "");
+    	}
+    	return $conn;
+    }
+ }
+
+
+
+
+?>
