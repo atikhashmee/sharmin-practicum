@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 22, 2017 at 08:39 PM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 7.1.7
+-- Host: localhost
+-- Generation Time: Feb 15, 2018 at 05:38 PM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,28 +52,77 @@ INSERT INTO `customer` (`id`, `name`, `pass`, `date`, `gender`) VALUES
 
 CREATE TABLE `dealers` (
   `id` int(11) NOT NULL,
-  `dealer_id` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
   `pass` varchar(200) NOT NULL,
   `address` text NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `phone` varchar(200) NOT NULL,
+  `gander` varchar(200) NOT NULL,
   `join_date` date NOT NULL,
-  `accounts` tinyint(1) NOT NULL,
-  `payment_date` date NOT NULL,
   `type` varchar(200) NOT NULL,
-  `addedby` varchar(200) NOT NULL
+  `addedby` varchar(200) NOT NULL,
+  `division_id` int(200) NOT NULL,
+  `district_id` int(200) NOT NULL,
+  `thana_id` int(200) NOT NULL,
+  `status` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dealers`
 --
 
-INSERT INTO `dealers` (`id`, `dealer_id`, `name`, `pass`, `address`, `join_date`, `accounts`, `payment_date`, `type`, `addedby`) VALUES
-(1, 'ad123', 'admin', '123456', 'uttara', '2017-07-13', 0, '0000-00-00', 'admin', 'admin'),
-(2, 'ad1234', 'siyam', '123456', 'mirpur', '2017-07-16', 0, '0000-00-00', 'dealer', 'admin'),
-(3, 'shoper02', 'shoper', '123456', '', '2017-07-16', 0, '0000-00-00', 'shoper', 'siyam'),
-(4, 's101', 'shoper1', '123456', '', '2017-07-28', 0, '0000-00-00', 'shoper', 'siyam'),
-(9, '102', 'Hasan', '12345', '', '2017-07-30', 0, '0000-00-00', 'shoper', ''),
-(10, 'D2011', 'Jhone', '123456', 'mirpur', '2017-08-21', 0, '0000-00-00', 'dealer', 'admin');
+INSERT INTO `dealers` (`id`, `name`, `pass`, `address`, `email`, `phone`, `gander`, `join_date`, `type`, `addedby`, `division_id`, `district_id`, `thana_id`, `status`) VALUES
+(1, 'admin', '123456', 'uttara', '', '', '', '2017-07-13', '0', 'admin', 0, 0, 0, 2),
+(2, 'siyam', '123456', 'mirpur', '', '', '', '2017-07-16', 'dealer', 'admin', 0, 0, 0, 1),
+(3, 'shoper', '123456', '', '', '', '', '2017-07-16', 'shoper', 'siyam', 0, 0, 0, 1),
+(4, 'shoper1', '123456', '', '', '', '', '2017-07-28', 'shoper', 'siyam', 0, 0, 0, 1),
+(9, 'Hasan', '12345', '', '', '', '', '2017-07-30', 'shoper', '', 0, 0, 0, 2),
+(10, 'Jhone', '123456', 'mirpur', '', '', '', '2017-08-21', 'dealer', 'admin', 0, 0, 0, 2),
+(11, 'testdealer', '123456', 'ghlshan', 'testdealer@gmail.com', '01735623513', 'on', '0000-00-00', '1', '', 1, 3, 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `district`
+--
+
+CREATE TABLE `district` (
+  `district_id` int(11) NOT NULL,
+  `district_name` varchar(200) NOT NULL,
+  `division_id` int(255) NOT NULL,
+  `created_at` varchar(200) NOT NULL,
+  `updated_at` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `district`
+--
+
+INSERT INTO `district` (`district_id`, `district_name`, `division_id`, `created_at`, `updated_at`) VALUES
+(1, 'Gazipur', 1, '2018-02-11', ''),
+(2, 'NarayanGong', 1, '2018-02-11', ''),
+(3, 'Dhaka', 1, '2018-02-11', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `division`
+--
+
+CREATE TABLE `division` (
+  `d_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `created_at` varchar(255) NOT NULL,
+  `updated_at` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `division`
+--
+
+INSERT INTO `division` (`d_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Dhaka', '2018-02-11', ''),
+(2, 'Rajshahi', '2018-02-11', '');
 
 -- --------------------------------------------------------
 
@@ -112,7 +161,6 @@ INSERT INTO `payments` (`payment_id`, `users`, `totall_amount`, `payment`, `due`
 
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
-  `p_idd` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
   `product_category` varchar(200) NOT NULL,
   `date` date NOT NULL,
@@ -126,11 +174,11 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `p_idd`, `name`, `product_category`, `date`, `price`, `quantity`, `imgpath`, `imagefile`) VALUES
-(9, 'p101', 'chair', 'visitor chair', '2017-07-07', 500, 50, '../img/products/shirin30-07-2017-1501392484.jpg', '30-07-2017-1501392484.jpg'),
-(10, 'p102', 'table box', '', '2017-07-13', 50, 50, '../img/products/shirin30-07-2017-1501392756.jpg', '30-07-2017-1501392756.jpg'),
-(12, 'p303', 'mango', 'director table', '2017-07-13', 555, 50, '../img/products/shirin30-07-2017-1501392912.jpg', '30-07-2017-1501392912.jpg'),
-(13, '181789472152519', 'ShowCase', 'computer table', '2017-08-06', 6500, 50, '../img/products/shirin06-08-2017-1501991530.jpg', '06-08-2017-1501991530.jpg');
+INSERT INTO `product` (`id`, `name`, `product_category`, `date`, `price`, `quantity`, `imgpath`, `imagefile`) VALUES
+(9, 'chair', 'visitor chair', '2017-07-07', 500, 50, '../img/products/shirin30-07-2017-1501392484.jpg', '30-07-2017-1501392484.jpg'),
+(10, 'table box', '', '2017-07-13', 50, 50, '../img/products/shirin30-07-2017-1501392756.jpg', '30-07-2017-1501392756.jpg'),
+(12, 'mango', 'director table', '2017-07-13', 555, 50, '../img/products/shirin30-07-2017-1501392912.jpg', '30-07-2017-1501392912.jpg'),
+(13, 'ShowCase', 'computer table', '2017-08-06', 6500, 50, '../img/products/shirin06-08-2017-1501991530.jpg', '06-08-2017-1501991530.jpg');
 
 -- --------------------------------------------------------
 
@@ -142,30 +190,24 @@ CREATE TABLE `p_distribution` (
   `id` int(11) NOT NULL,
   `p_id` varchar(200) NOT NULL,
   `dealer_id` varchar(200) NOT NULL,
-  `quantity` int(200) NOT NULL,
-  `price` int(200) NOT NULL,
-  `sellingprice` double NOT NULL,
-  `due` int(200) NOT NULL,
-  `recive_date` date NOT NULL,
-  `distributedby` varchar(200) NOT NULL
+  `quantity` varchar(200) NOT NULL,
+  `price` varchar(200) NOT NULL,
+  `profitepercen` varchar(200) NOT NULL,
+  `distributedate` date NOT NULL,
+  `distributedby` varchar(200) NOT NULL,
+  `comission` int(200) NOT NULL,
+  `start_date` varchar(255) NOT NULL,
+  `end_date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `p_distribution`
 --
 
-INSERT INTO `p_distribution` (`id`, `p_id`, `dealer_id`, `quantity`, `price`, `sellingprice`, `due`, `recive_date`, `distributedby`) VALUES
-(10, 'chair', 'siyam', 1, 500, 520, 500, '2017-07-30', 'admin'),
-(13, 'chair', 'shoper', 1, 520, 540.8, 0, '2017-07-30', 'siyam'),
-(15, 'mango', 'shoper1', 1, 577, 582.77, 0, '2017-07-30', 'siyam'),
-(16, 'chair', 'siyam', 2, 500, 520, 1000, '2017-07-30', 'admin'),
-(17, 'table', 'shoper', 1, 53, 54.59, 0, '2017-07-30', 'siyam'),
-(18, 'table', 'siyam', 5, 50, 51, 250, '2017-07-30', 'admin'),
-(19, 'chair', 'siyam', 8, 500, 515, 4000, '2017-07-30', 'admin'),
-(20, 'chair', 'siyam', 5000, 500, 525, 2500000, '2017-07-30', 'admin'),
-(21, 'chair', 'shoper', 2, 520, 530.4, 1040, '2017-07-30', 'siyam'),
-(22, 'ShowCase', 'siyam', 5, 6500, 6630, 32500, '2017-08-08', 'admin'),
-(23, 'chair', 'Jhone', 34, 500, 510, 17000, '2017-08-22', 'admin');
+INSERT INTO `p_distribution` (`id`, `p_id`, `dealer_id`, `quantity`, `price`, `profitepercen`, `distributedate`, `distributedby`, `comission`, `start_date`, `end_date`) VALUES
+(1, '10,13', '3', '2,2', '50,6500', '3,2', '2018-02-13', 'tota', 23, '2018-02-13', '2018-02-23'),
+(2, '12,10,13', '11', '2,2,2', '555,50,6500', '2,3,2', '2018-02-13', 'tota', 25, '2018-02-13', '2018-02-20'),
+(3, '10,13', '11', '3,2', '50,6500', '2,3', '2018-02-13', 'tota', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -224,6 +266,29 @@ INSERT INTO `supplier` (`id`, `name`, `date`, `gender`, `addedby`) VALUES
 (2, 'Mr kali', '2017-07-14', 'Male', 'dealer'),
 (3, 'Siyam', '2017-08-06', 'Male', 'siyam');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `thana`
+--
+
+CREATE TABLE `thana` (
+  `thana_id` int(11) NOT NULL,
+  `thana_name` varchar(200) NOT NULL,
+  `district_id` int(200) NOT NULL,
+  `created_at` varchar(200) NOT NULL,
+  `updated_at` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `thana`
+--
+
+INSERT INTO `thana` (`thana_id`, `thana_name`, `district_id`, `created_at`, `updated_at`) VALUES
+(1, 'Uttara', 3, '2018-02-11', ''),
+(2, 'Dhanmondi', 3, '2018-02-11', ''),
+(3, 'Ghulshan-1', 3, '2018-02-11', '');
+
 --
 -- Indexes for dumped tables
 --
@@ -239,6 +304,18 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `dealers`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `district`
+--
+ALTER TABLE `district`
+  ADD PRIMARY KEY (`district_id`);
+
+--
+-- Indexes for table `division`
+--
+ALTER TABLE `division`
+  ADD PRIMARY KEY (`d_id`);
 
 --
 -- Indexes for table `payments`
@@ -271,6 +348,12 @@ ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `thana`
+--
+ALTER TABLE `thana`
+  ADD PRIMARY KEY (`thana_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -279,36 +362,61 @@ ALTER TABLE `supplier`
 --
 ALTER TABLE `customer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `dealers`
 --
 ALTER TABLE `dealers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `district`
+--
+ALTER TABLE `district`
+  MODIFY `district_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `division`
+--
+ALTER TABLE `division`
+  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
   MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `p_distribution`
 --
 ALTER TABLE `p_distribution`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `p_sell`
 --
 ALTER TABLE `p_sell`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `thana`
+--
+ALTER TABLE `thana`
+  MODIFY `thana_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
